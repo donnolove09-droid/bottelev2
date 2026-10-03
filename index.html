@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070a14">
+<title>BOT//MANAGER 5.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a14;--panel:#0d1224;--line:rgba(0,240,255,.22);--cy:#00f0ff;--mg:#ff2bd6;--pu:#8b5cf6;--gr:#39ff88;--rd:#ff3b5c;--yl:#ffd23f;--tx:#e6ecff;--mu:#7b88ad}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--tx);font:600 16px/1.45 Rajdhani,"Segoe UI",system-ui,sans-serif;background:var(--bg);
+background-image:radial-gradient(900px 500px at 12% -10%,rgba(139,92,246,.28),transparent 60%),radial-gradient(800px 500px at 100% 0,rgba(0,240,255,.16),transparent 60%),radial-gradient(700px 500px at 50% 110%,rgba(255,43,214,.14),transparent 60%);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,240,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.05) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(#000 30%,transparent 90%);-webkit-mask-image:linear-gradient(#000 30%,transparent 90%)}
+body::after{content:"";position:fixed;left:0;right:0;height:140px;top:-140px;pointer-events:none;z-index:0;background:linear-gradient(transparent,rgba(0,240,255,.05),transparent);animation:scan 7s linear infinite}
+@keyframes scan{to{transform:translateY(120vh)}}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:auto;padding:16px 16px 110px}
+/* header */
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 0 6px}
+.logo{font:900 24px Orbitron,sans-serif;letter-spacing:2px;background:linear-gradient(90deg,var(--cy),var(--mg));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(0,240,255,.45))}
+.ver{font:700 12px Orbitron,sans-serif;padding:3px 9px;border:1px solid var(--mg);color:var(--mg);border-radius:4px;box-shadow:0 0 10px rgba(255,43,214,.5),inset 0 0 8px rgba(255,43,214,.25);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 20px rgba(255,43,214,.9),inset 0 0 12px rgba(255,43,214,.4)}}
+.sp{flex:1}
+.link{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);padding:6px 8px 6px 12px;border-radius:8px;min-width:0}
+.led{width:10px;height:10px;border-radius:50%;background:var(--mu);flex:none}.led.ok{background:var(--gr);box-shadow:0 0 10px var(--gr)}.led.err{background:var(--rd);box-shadow:0 0 10px var(--rd)}
+.link input{width:150px;background:transparent;border:0;outline:0;color:var(--tx);font:600 15px Rajdhani,sans-serif}
+.link button{padding:6px 12px}
+/* nav */
+nav{position:sticky;top:0;z-index:20;display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:6px 0 14px;background:linear-gradient(var(--bg) 70%,transparent);scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;background:var(--panel);border:1px solid var(--line);color:var(--mu);padding:9px 16px;font:700 13px Orbitron,sans-serif;letter-spacing:1px;cursor:pointer;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);transition:.2s}
+nav button:hover{color:var(--tx)}
+nav button.on{color:#021018;background:linear-gradient(90deg,var(--cy),#6ff6ff);border-color:var(--cy);box-shadow:0 0 18px rgba(0,240,255,.55)}
+/* cards */
+.tab{display:none;animation:in .35s ease}.tab.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+.card{position:relative;background:linear-gradient(160deg,rgba(18,26,52,.92),rgba(10,14,30,.92));border:1px solid var(--line);padding:18px;margin-bottom:16px;clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px);box-shadow:0 0 30px rgba(0,240,255,.05)}
+.card::before{content:"";position:absolute;left:0;top:0;width:60px;height:3px;background:linear-gradient(90deg,var(--cy),transparent)}
+.card.mg::before{background:linear-gradient(90deg,var(--mg),transparent)}.card.pu::before{background:linear-gradient(90deg,var(--pu),transparent)}.card.gr::before{background:linear-gradient(90deg,var(--gr),transparent)}
+h2{margin:0 0 12px;font:700 15px Orbitron,sans-serif;letter-spacing:1.5px;color:var(--cy);text-transform:uppercase}
+h2 i{font-style:normal;margin-right:8px}
+.sub{color:var(--mu);font-size:14px;margin:0 0 12px}
+label{display:block;color:var(--mu);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin:10px 0 2px}
+input,select,textarea{width:100%;background:#070b18;color:var(--tx);border:1px solid #243257;border-radius:6px;padding:11px 12px;font:600 16px Rajdhani,sans-serif;outline:0;transition:.2s}
+input:focus,select:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 0 3px rgba(0,240,255,.14)}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--cy);padding:0}
+button{cursor:pointer;border:0;border-radius:6px;padding:11px 16px;color:#021018;font:700 14px Orbitron,sans-serif;letter-spacing:1px;background:linear-gradient(90deg,var(--cy),#4aa8ff);transition:.2s}
+button:hover{filter:brightness(1.12);box-shadow:0 0 18px rgba(0,240,255,.5)}button:active{transform:translateY(1px)}
+button.full{width:100%;margin-top:12px}
+button.mg{background:linear-gradient(90deg,var(--mg),var(--pu));color:#fff}button.mg:hover{box-shadow:0 0 18px rgba(255,43,214,.55)}
+button.ghost{background:transparent;color:var(--cy);border:1px solid var(--line)}
+button.danger{background:transparent;color:var(--rd);border:1px solid rgba(255,59,92,.45)}button.danger:hover{background:rgba(255,59,92,.14);box-shadow:none}
+button.sm{padding:6px 11px;font-size:11px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.row>button{flex:none}
+.chk{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--tx);font-size:15px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:16px}
+.stat{padding:16px;background:var(--panel);border:1px solid var(--line);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.stat b{display:block;font:900 34px Orbitron,sans-serif;color:var(--c,var(--cy));text-shadow:0 0 16px var(--c,var(--cy))}
+.stat span{color:var(--mu);font-size:13px;letter-spacing:1.5px;text-transform:uppercase}
+/* items */
+.item{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px;margin:8px 0;background:rgba(7,11,24,.7);border:1px solid #1c2748;border-left:3px solid var(--cy);border-radius:4px}
+.item.f{border-left-color:var(--mg)}.item.s{border-left-color:var(--gr)}
+.item .main{flex:1;min-width:180px}.item .t{font-size:17px;font-weight:700;word-break:break-word}.item .m{color:var(--mu);font-size:14px}
+.item .act{display:flex;gap:6px;flex-wrap:wrap}
+.id{display:inline-flex;align-items:center;gap:6px;font:600 13px ui-monospace,Menlo,Consolas,monospace;color:var(--gr);background:rgba(57,255,136,.08);border:1px solid rgba(57,255,136,.35);padding:3px 8px;border-radius:4px;cursor:pointer;user-select:all}
+.id:hover{background:rgba(57,255,136,.18)}
+.tag{font:700 10px Orbitron,sans-serif;letter-spacing:1px;padding:3px 7px;border-radius:3px;border:1px solid;margin-right:6px;vertical-align:middle}
+.tag.group,.tag.supergroup{color:var(--cy);border-color:var(--cy)}.tag.channel{color:var(--yl);border-color:var(--yl)}.tag.private{color:var(--mg);border-color:var(--mg)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.chip{padding:6px 12px;font:700 11px Orbitron,sans-serif;background:transparent;color:var(--mu);border:1px solid #243257}.chip.on{color:var(--cy);border-color:var(--cy);background:rgba(0,240,255,.08)}
+.empty{text-align:center;color:var(--mu);padding:26px 10px;border:1px dashed #243257;border-radius:6px}
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:6px 0 6px 40px;color:var(--tx)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:5px;width:28px;height:28px;display:grid;place-items:center;font:700 13px Orbitron,sans-serif;color:var(--mg);border:1px solid var(--mg);border-radius:4px;box-shadow:0 0 10px rgba(255,43,214,.35)}
+code{background:#050816;color:var(--yl);padding:1px 6px;border-radius:4px;font-size:14px}
+/* dropzone */
+.drop{margin-top:6px;text-align:center;padding:22px 12px;border:2px dashed rgba(255,43,214,.5);border-radius:8px;background:rgba(255,43,214,.04);cursor:pointer;transition:.2s}
+.drop:hover,.drop.over{background:rgba(255,43,214,.12);box-shadow:0 0 22px rgba(255,43,214,.3)}
+.drop b{display:block;font:700 14px Orbitron,sans-serif;color:var(--mg);letter-spacing:1px}.drop span{color:var(--mu);font-size:14px}
+.bar{height:8px;background:#0a0f20;border-radius:4px;overflow:hidden;margin-top:10px;display:none}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mg),var(--cy));box-shadow:0 0 12px var(--cy);transition:width .15s}
+/* toast */
+#toasts{position:fixed;right:14px;bottom:14px;z-index:99;display:flex;flex-direction:column;gap:8px;max-width:min(380px,calc(100vw - 28px))}
+.toast{padding:12px 14px;background:#0b1126;border:1px solid var(--cy);border-left-width:4px;border-radius:6px;box-shadow:0 0 22px rgba(0,240,255,.3);animation:in .25s}
+.toast.err{border-color:var(--rd);box-shadow:0 0 22px rgba(255,59,92,.3)}.toast.ok{border-color:var(--gr);box-shadow:0 0 22px rgba(57,255,136,.25)}
+@media(max-width:640px){.logo{font-size:19px}.link{width:100%}.link input{flex:1;width:auto}.wrap{padding:12px 12px 110px}#toasts{bottom:78px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="logo">BOT//MANAGER</span><span class="ver">5.0</span><span class="sp"></span>
+  <div class="link"><span id="led" class="led"></span><input id="key" type="password" placeholder="ADMIN_KEY" autocomplete="off"><button class="sm" onclick="saveKey()">KẾT NỐI</button></div>
+</header>
+
+<nav id="nav">
+  <button data-t="home" class="on">⚡ TỔNG QUAN</button>
+  <button data-t="bots">🤖 BOT</button>
+  <button data-t="chats">💬 PHÒNG CHAT</button>
+  <button data-t="send">📢 GỬI</button>
+  <button data-t="files">📁 FILE</button>
+  <button data-t="sched">⏰ LỊCH</button>
+</nav>
+
+<!-- HOME -->
+<section class="tab on" id="t-home">
+  <div class="stats">
+    <div class="stat"><b id="sBots">0</b><span>Bot</span></div>
+    <div class="stat" style="--c:var(--mg)"><b id="sChats">0</b><span>Phòng chat</span></div>
+    <div class="stat" style="--c:var(--gr)"><b id="sFiles">0</b><span>File</span></div>
+    <div class="stat" style="--c:var(--yl)"><b id="sSch">0</b><span>Lịch</span></div>
+  </div>
+  <div class="grid">
+    <div class="card"><h2><i>🆔</i>Lấy ID phòng chat</h2>
+      <ol class="steps"><li>Thêm bot vào tab <b>BOT</b></li><li>Thêm bot vào nhóm / kênh Telegram</li><li>ID tự hiện ở tab <b>PHÒNG CHAT</b> — hoặc gõ <code>/id</code> trong nhóm</li></ol>
+      <button class="full" onclick="go('chats')">MỞ DANH SÁCH ID</button></div>
+    <div class="card mg"><h2><i>📤</i>Gửi file qua bot</h2>
+      <p class="sub">Upload ảnh, video, tài liệu (tối đa 50MB) rồi gửi thẳng vào phòng chat. Thành viên cũng có thể gõ <code>/file</code> để tự nhận file từ kho.</p>
+      <button class="full mg" onclick="go('send')">GỬI FILE NGAY</button></div>
+  </div>
+</section>
+
+<!-- BOTS -->
+<section class="tab" id="t-bots">
+  <div class="grid">
+    <div class="card"><h2><i>➕</i>Thêm bot</h2>
+      <label>Tên bot</label><input id="botName" placeholder="VD: Bot Chính">
+      <label>Token (BotFather)</label><input id="botToken" placeholder="123456:ABC-DEF...">
+      <button class="full" onclick="addBot()">THÊM BOT + CÀI COMMANDS</button></div>
+    <div class="card pu"><h2><i>🎮</i>Slash commands</h2>
+      <p class="sub"><code>/help</code> <code>/id</code> <code>/star</code> <code>/file</code> <code>/aov</code> <code>/mod</code> <code>/ff</code> <code>/ban</code> <code>/unl</code></p>
+      <p class="sub">Để <code>/ban</code> và <code>/unl</code> hoạt động, bot cần quyền quản trị phù hợp trong nhóm.</p></div>
+  </div>
+  <div class="card"><h2><i>🤖</i>Danh sách bot</h2><div id="botList"></div></div>
+</section>
+
+<!-- CHATS -->
+<section class="tab" id="t-chats">
+  <div class="grid">
+    <div class="card"><h2><i>📡</i>Radar ID tự động</h2>
+      <p class="sub">Bot được thêm vào nhóm, có người nhắn hoặc gõ <code>/id</code> là ID tự xuất hiện bên dưới (tự làm mới mỗi 8 giây).</p>
+      <button class="ghost full" onclick="loadChats(true)">🔄 LÀM MỚI NGAY</button></div>
+    <div class="card mg"><h2><i>🔗</i>Thêm thủ công</h2>
+      <label>Bot</label><select id="addBot"></select>
+      <label>ID / @username / link t.me</label><input id="addChat" placeholder="-1001234567890 hoặc @tennhom">
+      <button class="full mg" onclick="addChat()">KIỂM TRA & LƯU</button></div>
+  </div>
+  <div class="card gr"><h2><i>💬</i>Phòng chat đã phát hiện</h2>
+    <input id="chatQ" placeholder="🔍 Tìm theo tên hoặc ID..." oninput="renderChats()">
+    <div class="chips" id="chips">
+      <button class="chip on" data-f="all">TẤT CẢ</button><button class="chip" data-f="group">NHÓM</button><button class="chip" data-f="channel">KÊNH</button><button class="chip" data-f="private">RIÊNG TƯ</button>
+    </div>
+    <div id="chatList"></div></div>
+</section>
+
+<!-- SEND -->
+<section class="tab" id="t-send">
+  <div class="grid">
+    <div class="card"><h2><i>📢</i>Gửi tin nhắn</h2>
+      <label>Bot</label><select id="sendBot"></select>
+      <label>Phòng chat</label><select id="sendChat"></select>
+      <label>Nội dung</label><textarea id="sendMsg" rows="4" placeholder="Nội dung thông báo"></textarea>
+      <button class="full" onclick="sendNow()">GỬI THÔNG BÁO</button></div>
+    <div class="card mg"><h2><i>📎</i>Gửi file</h2>
+      <label>Bot</label><select id="fBot"></select>
+      <label>Phòng chat</label><select id="fChat"></select>
+      <label>File từ kho</label><select id="fLib"></select>
+      <div class="drop" id="fDrop"><b>⬆ KÉO THẢ HOẶC CHẠM ĐỂ CHỌN FILE</b><span id="fName">Hoặc chọn file mới (tối đa 50MB)</span></div>
+      <input type="file" id="fInput" hidden>
+      <label>Chú thích (tuỳ chọn)</label><input id="fCap" placeholder="Caption...">
+      <label class="chk"><input type="checkbox" id="fDoc"> Gửi dạng file gốc (không nén ảnh/video)</label>
+      <label class="chk"><input type="checkbox" id="fSave" checked> Lưu file mới vào kho</label>
+      <div class="bar" id="fBar"><i></i></div>
+      <button class="full mg" id="fBtn" onclick="sendFile()">GỬI FILE</button></div>
+  </div>
+</section>
+
+<!-- FILES -->
+<section class="tab" id="t-files">
+  <div class="card mg"><h2><i>📁</i>Kho file</h2>
+    <p class="sub">File trong kho nhận được bằng lệnh <code>/file</code> trong mọi phòng chat có bot. Dung lượng: <b id="fUsed">0 B</b></p>
+    <div class="drop" id="lDrop"><b>⬆ UPLOAD VÀO KHO</b><span>Kéo thả hoặc chạm để chọn (nhiều file được)</span></div>
+    <input type="file" id="lInput" multiple hidden>
+    <div class="bar" id="lBar"><i></i></div>
+    <div id="fileList" style="margin-top:12px"></div></div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="tab" id="t-sched">
+  <div class="grid">
+    <div class="card"><h2><i>⏰</i>Tạo lịch tự động</h2>
+      <label>Bot</label><select id="schBot"></select>
+      <label>Phòng chat</label><select id="schChat"></select>
+      <label>Nội dung</label><textarea id="schMsg" rows="3" placeholder="Nội dung"></textarea>
+      <label>Lặp lại mỗi (giây, tối thiểu 60)</label><input id="interval" type="number" min="60" value="3600">
+      <button class="full" onclick="addSchedule()">TẠO LỊCH</button></div>
+    <div class="card pu"><h2><i>🗓️</i>Lịch đang chạy</h2><div id="schList"></div></div>
+  </div>
+</section>
+</div>
+<div id="toasts"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const S={bots:[],chats:[],files:[],sch:[],filter:"all"};
+let KEY=localStorage.getItem("adminKey")||"";$("key").value=KEY;
+const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const fmt=n=>{n=+n;const u=["B","KB","MB","GB"];let i=0;while(n>=1024&&i<3){n/=1024;i++}return (i?n.toFixed(1):n)+" "+u[i]};
+const ago=t=>{if(!t)return"—";const s=Math.max(0,Date.now()/1000-t);if(s<60)return"vừa xong";if(s<3600)return Math.floor(s/60)+" phút trước";if(s<86400)return Math.floor(s/3600)+" giờ trước";return new Date(t*1000).toLocaleDateString("vi-VN")};
+function toast(s,type=""){const d=document.createElement("div");d.className="toast "+type;d.textContent=s;$("toasts").append(d);setTimeout(()=>d.remove(),4200)}
+function led(st){$("led").className="led "+st}
+
+async function api(p,o={}){
+  o.headers={"X-Admin-Key":KEY,...(o.headers||{})};
+  if(o.body&&!(o.body instanceof FormData))o.headers["Content-Type"]="application/json";
+  const r=await fetch(p,o);let d={};try{d=await r.json()}catch{}
+  if(!r.ok){if(r.status===401)led("err");throw Error(d.error||d.description||"Lỗi "+r.status)}
+  led("ok");return d;
+}
+function upload(url,fd,bar){return new Promise((res,rej)=>{
+  const x=new XMLHttpRequest();x.open("POST",url);x.setRequestHeader("X-Admin-Key",KEY);
+  const b=$(bar);b.style.display="block";b.firstElementChild.style.width="0";
+  x.upload.onprogress=e=>{if(e.lengthComputable)b.firstElementChild.style.width=(e.loaded/e.total*100)+"%"};
+  x.onload=()=>{b.style.display="none";let d={};try{d=JSON.parse(x.responseText)}catch{}x.status<300&&d.ok!==false?res(d):rej(Error(d.error||"Lỗi "+x.status))};
+  x.onerror=()=>{b.style.display="none";rej(Error("Mất kết nối"))};x.send(fd)})}
+
+/* tabs */
+function go(t){document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("on",e.id==="t-"+t));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));window.scrollTo({top:0,behavior:"smooth"});if(t==="chats")loadChats()}
+$("nav").onclick=e=>{const t=e.target.closest("button")?.dataset.t;if(t)go(t)};
+$("chips").onclick=e=>{const f=e.target.dataset.f;if(!f)return;S.filter=f;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c.dataset.f===f));renderChats()};
+function saveKey(){KEY=$("key").value;localStorage.setItem("adminKey",KEY);loadAll()}
+
+/* select helpers */
+function botOpts(){return S.bots.map(b=>`<option value="${b.id}">${esc(b.name)}${b.username?" (@"+esc(b.username)+")":""}</option>`).join("")}
+function chatOpts(botId){const l=S.chats.filter(c=>c.bot_id==botId);return l.length?l.map(c=>`<option value="${esc(c.chat_id)}">${esc(c.title||c.chat_id)} · ${esc(c.chat_id)}</option>`).join(""):`<option value="">— chưa có phòng chat —</option>`}
+function fillSelects(){
+  const keep={};["sendBot","fBot","schBot","addBot"].forEach(i=>keep[i]=$(i).value);
+  ["sendBot","fBot","schBot","addBot"].forEach(i=>{$(i).innerHTML=botOpts();if(keep[i])$(i).value=keep[i]});
+  fillChatSel();
+  $("fLib").innerHTML=`<option value="">— không dùng (chọn file mới bên dưới) —</option>`+S.files.map(f=>`<option value="${f.id}">${esc(f.name)} · ${fmt(f.size)}</option>`).join("");
+}
+function fillChatSel(){[["sendBot","sendChat"],["fBot","fChat"],["schBot","schChat"]].forEach(([b,c])=>{const old=$(c).value;$(c).innerHTML=chatOpts($(b).value);if(old)$(c).value=old})}
+["sendBot","fBot","schBot"].forEach(i=>$(i).onchange=fillChatSel);
+
+/* loaders */
+async function loadBots(){try{S.bots=await api("/api/bots");renderBots()}catch(e){toast(e.message,"err")}}
+async function loadChats(manual){try{S.chats=await api("/api/chats");renderChats();fillChatSel();if(manual)toast("Đã làm mới danh sách","ok")}catch(e){if(manual)toast(e.message,"err")}}
+async function loadFiles(){try{S.files=await api("/api/files");renderFiles()}catch(e){}}
+async function loadSch(){try{S.sch=await api("/api/schedules");renderSch()}catch(e){}}
+async function loadAll(){await Promise.all([loadBots(),loadChats(),loadFiles(),loadSch()]);fillSelects();stats()}
+function stats(){$("sBots").textContent=S.bots.length;$("sChats").textContent=S.chats.length;$("sFiles").textContent=S.files.length;$("sSch").textContent=S.sch.length}
+
+/* render */
+function renderBots(){
+  $("botList").innerHTML=S.bots.length?S.bots.map(b=>`<div class="item"><div class="main"><div class="t">${esc(b.name)}</div><div class="m">${b.username?"@"+esc(b.username)+" · ":""}ID nội bộ ${b.id}</div></div>
+  <div class="act"><button class="ghost sm" onclick="resetCommands(${b.id})">🔄 CÀI LẠI COMMANDS</button><button class="danger sm" onclick="delBot(${b.id})">XÓA</button></div></div>`).join(""):`<div class="empty">Chưa có bot nào. Thêm bot ở form bên trên.</div>`;
+}
+function renderChats(){
+  const q=$("chatQ").value.trim().toLowerCase(),f=S.filter;
+  const l=S.chats.filter(c=>(f==="all"||(f==="group"?["group","supergroup"].includes(c.type):c.type===f))&&(!q||(c.title||"").toLowerCase().includes(q)||c.chat_id.includes(q)));
+  $("chatList").innerHTML=l.length?l.map(c=>`<div class="item f"><div class="main"><div class="t"><span class="tag ${esc(c.type)}">${esc((c.type||"?").toUpperCase())}</span>${esc(c.title||c.chat_id)}</div>
+  <div class="m">Bot: ${esc(c.bot_name)} · hoạt động ${ago(c.last_seen)}${c.username?" · @"+esc(c.username):""}</div>
+  <div style="margin-top:6px"><span class="id" onclick="copy('${esc(c.chat_id)}')" title="Chạm để sao chép">🆔 ${esc(c.chat_id)} 📋</span></div></div>
+  <div class="act"><button class="sm" onclick="useChat(${c.bot_id},'${esc(c.chat_id)}')">DÙNG ĐỂ GỬI</button><button class="danger sm" onclick="delChat(${c.id})">XÓA</button></div></div>`).join(""):
+  `<div class="empty">Chưa phát hiện phòng chat nào.<br>Thêm bot vào nhóm rồi gõ <code>/id</code> trong nhóm đó.</div>`;
+  stats();
+}
+function renderFiles(){
+  $("fUsed").textContent=fmt(S.files.reduce((a,f)=>a+f.size,0));
+  $("fileList").innerHTML=S.files.length?S.files.map(f=>`<div class="item f"><div class="main"><div class="t">📄 ${esc(f.name)}</div><div class="m">${fmt(f.size)} · ${ago(f.created)} · <span class="id" onclick="copy('/file ${f.id}')">/file ${f.id}</span></div></div>
+  <div class="act"><button class="sm mg" onclick="useFile(${f.id})">GỬI</button><button class="danger sm" onclick="delFile(${f.id})">XÓA</button></div></div>`).join(""):`<div class="empty">Kho trống. Upload file để bắt đầu.</div>`;
+  stats();
+}
+function renderSch(){
+  $("schList").innerHTML=S.sch.length?S.sch.map(s=>`<div class="item s"><div class="main"><div class="t">${esc(s.bot_name)} → ${esc(s.chat_id)}</div><div class="m">${esc(s.message)}</div><div class="m">Mỗi ${s.interval_seconds}s</div></div><button class="danger sm" onclick="delSch(${s.id})">XÓA</button></div>`).join(""):`<div class="empty">Chưa có lịch nào.</div>`;
+  stats();
+}
+
+/* actions */
+async function copy(t){try{await navigator.clipboard.writeText(t)}catch{const i=document.createElement("input");i.value=t;document.body.append(i);i.select();document.execCommand("copy");i.remove()}toast("Đã sao chép: "+t,"ok")}
+async function addBot(){try{const d=await api("/api/bots",{method:"POST",body:JSON.stringify({name:$("botName").value,token:$("botToken").value})});toast("Đã thêm @"+d.bot.username+" và cài commands","ok");$("botName").value=$("botToken").value="";await loadBots();fillSelects()}catch(e){toast(e.message,"err")}}
+async function resetCommands(id){try{await api(`/api/bots/${id}/commands`,{method:"POST"});toast("Đã cài lại commands","ok")}catch(e){toast(e.message,"err")}}
+async function delBot(id){if(!confirm("Xóa bot này?"))return;await api("/api/bots/"+id,{method:"DELETE"});loadAll()}
+async function addChat(){try{const d=await api(`/api/bots/${$("addBot").value}/check-chat`,{method:"POST",body:JSON.stringify({chat_id:$("addChat").value})});toast("Đã lưu: "+(d.chat.title||d.chat.username||d.chat.id),"ok");$("addChat").value="";loadChats()}catch(e){toast(e.message,"err")}}
+async function delChat(id){await api("/api/chats/"+id,{method:"DELETE"});loadChats()}
+function useChat(bot,chat){go("send");$("sendBot").value=$("fBot").value=bot;fillChatSel();$("sendChat").value=$("fChat").value=chat;toast("Đã chọn phòng chat","ok")}
+async function sendNow(){try{await api("/api/send",{method:"POST",body:JSON.stringify({bot_id:+$("sendBot").value,chat_id:$("sendChat").value,message:$("sendMsg").value})});toast("Đã gửi thông báo","ok")}catch(e){toast(e.message,"err")}}
+async function addSchedule(){try{await api("/api/schedules",{method:"POST",body:JSON.stringify({bot_id:+$("schBot").value,chat_id:$("schChat").value,message:$("schMsg").value,interval_seconds:+$("interval").value})});toast("Đã tạo lịch","ok");loadSch()}catch(e){toast(e.message,"err")}}
+async function delSch(id){await api("/api/schedules/"+id,{method:"DELETE"});loadSch()}
+
+/* files */
+let picked=null;
+function pick(f){picked=f;$("fName").textContent=f?`📎 ${f.name} · ${fmt(f.size)}`:"Hoặc chọn file mới (tối đa 50MB)";if(f)$("fLib").value=""}
+function dz(drop,input,cb){drop.onclick=()=>input.click();input.onchange=()=>cb(input.files);
+  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));
+  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
+  drop.addEventListener("drop",e=>cb(e.dataTransfer.files))}
+dz($("fDrop"),$("fInput"),fs=>pick(fs[0]||null));
+dz($("lDrop"),$("lInput"),async fs=>{for(const f of fs){try{const fd=new FormData();fd.append("file",f);await upload("/api/files",fd,"lBar");toast("Đã upload "+f.name,"ok")}catch(e){toast(f.name+": "+e.message,"err")}}$("lInput").value="";await loadFiles();fillSelects()});
+function useFile(id){go("send");$("fLib").value=id;pick(null);$("fLib").value=id}
+async function delFile(id){if(!confirm("Xóa file khỏi kho?"))return;await api("/api/files/"+id,{method:"DELETE"});await loadFiles();fillSelects()}
+async function sendFile(){
+  if(!$("fChat").value)return toast("Chưa chọn phòng chat","err");
+  if(!picked&&!$("fLib").value)return toast("Chưa chọn file","err");
+  const fd=new FormData();fd.append("bot_id",$("fBot").value);fd.append("chat_id",$("fChat").value);fd.append("caption",$("fCap").value);
+  if($("fDoc").checked)fd.append("as_document","1");
+  if(picked){fd.append("file",picked);if($("fSave").checked)fd.append("save","1")}else fd.append("file_id",$("fLib").value);
+  $("fBtn").disabled=true;
+  try{await upload("/api/send-file",fd,"fBar");toast("📤 Đã gửi file","ok");if(picked&&$("fSave").checked){await loadFiles();fillSelects()}pick(null);$("fInput").value="";$("fCap").value=""}
+  catch(e){toast(e.message,"err")}finally{$("fBtn").disabled=false}
+}
+
+loadAll();
+setInterval(()=>{if(!document.hidden&&$("t-chats").classList.contains("on"))loadChats()},8000);
+</script>
+</body>
+</html>

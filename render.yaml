@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: telegram-bot-manager
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn bot:app
+    envVars:
+      - key: ADMIN_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.12.0
+    disk:
+      name: telegram-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
